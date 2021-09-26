@@ -109,6 +109,20 @@ const app = {
         app.gameover();
       }
     };
+  },
+  // Nouvelle couleur aléatoire
+  getRandomColor: () => {
+    let randomNumber = Math.floor(Math.random() * 4);
+    let randomColor = app.colors[randomNumber];
+
+    return randomColor;
+  },
+  // 
+  nextMove: () => {
+    // ajouter une nouvelle couleur aléatoire à la sequence
+    app.sequence.push(app.getRandomColor());
+    // demander à Simon de "parler" 
+    app.simonSays(app.sequence);
   }
 };
 
