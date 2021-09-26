@@ -11,6 +11,8 @@ const app = {
 
   indice: 0,
 
+  isMyTurn : false,
+
   drawCells: function () {
     const playground = document.getElementById("playground");
     for (const color of app.colors) {
@@ -18,6 +20,7 @@ const app = {
       cell.className = "cell";
       cell.id = color;
       cell.style.backgroundColor = color;
+      cell.addEventListener("click", app.handleColorClick);
       playground.appendChild(cell);
     }
   },
@@ -36,22 +39,31 @@ const app = {
     app.sequence = [];
     // make it 3 times :
     for (let index = 0; index < 3; index++) {
-      // get a random number between 0 and 3
-      let random = Math.floor(Math.random() * 4);
-      // add the corresponding color to the sequence
-      app.sequence.push(app.colors[random]);
+      app.sequence.push(app.getRandomColor());
     }
-
     // start the "Simon Says" sequence
     app.simonSays(app.sequence);
   },
 
   simonSays: function (sequence) {
-    if (sequence && sequence.length) {
+    app.showMessage("Mémorisez la séquence");
+    app.isMyTurn = false;
+
+    //Il y a encore au moins une case a faire clognoter
+    if (sequence != null && sequence.length > 0) {
+
       // after 500ms, bump the first cell
       setTimeout(app.bumpCell, 500, sequence[0]);
       // plays the rest of the sequence after a longer pause
       setTimeout(app.simonSays, 850, sequence.slice(1));
+
+    } else {
+      // s'il n'y a plus de case a faire clignoter , simon a fini de parler ALORS c'est au tour du joueur de répéter la séquence
+      app.showMessage("Reproduisez la séquence");
+
+      // lorsque simon parle le user doit recommencer à cliquer sur les couleur de la sequence à partir du début
+      app.indice = 0;
+      app.isMyTurn = true;
     }
   },
 
@@ -95,6 +107,10 @@ const app = {
   },
   //
   handleColorClick: (event) => {
+    // Controle le tour de jouer
+    if(!app.isMyTurn) {
+      return;
+    }
 
     const clickedColor = event.target.id;
     app.bumpCell(clickedColor);
