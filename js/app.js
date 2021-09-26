@@ -72,13 +72,24 @@ const app = {
     const buttonElement = document.querySelector("#go");
     buttonElement.classList.add("hide");
   },
-  // Cacher la zone du message
+  // Cacher la zone du message et ré-affiche le bouton "Démarrer"
   hideMessage: () => {
     const messageElement = document.querySelector("#message");
     messageElement.classList.add("hide");
 
     const buttonElement = document.querySelector("#go");
     buttonElement.classList.remove("hide");
+  },
+  // Fin de la partie
+  gameover: () => {
+    let score = app.sequence.length;
+
+    alert(`Partie terminée. Votre score : ${score}`);
+    // Cacher le message et afficher le bouton 
+    app.hideMessage();
+
+    // Vider la séquence
+    app.sequence = [];
   },
 };
 
