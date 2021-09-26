@@ -31,3 +31,11 @@ div#message {
   text-align: center;
   font-size: 2em;
 }
+
+button#go.hide {
+  display: none;
+}
+
+div#message.hide {
+  display: none;
+} 

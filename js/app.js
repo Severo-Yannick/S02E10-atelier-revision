@@ -63,9 +63,23 @@ const app = {
 
   /** Fin du code fourni. Après, c'est à toi de jouer! */
 
+  // Afficher un message
   showMessage: function (message) {
-    document.getElementById("message").innerHTML = message;
+    const messageElement = document.querySelector("#message");
+    messageElement.innerHTML = message;
+    messageElement.classList.remove("hide");
+
+    const buttonElement = document.querySelector("#go");
+    buttonElement.classList.add("hide");
+  },
+  // Cacher la zone du message
+  hideMessage: () => {
+    const messageElement = document.querySelector("#message");
+    messageElement.classList.add("hide");
+
+    const buttonElement = document.querySelector("#go");
+    buttonElement.classList.remove("hide");
   },
 };
 
-document.addEventListener("domContentLoaded", app.init);
+document.addEventListener("DOMContentLoaded", app.init);
