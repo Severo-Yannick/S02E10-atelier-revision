@@ -9,6 +9,8 @@ const app = {
   // this var will contain the sequence said by Simon
   sequence: [],
 
+  indice: 0,
+
   drawCells: function () {
     const playground = document.getElementById("playground");
     for (const color of app.colors) {
@@ -91,6 +93,23 @@ const app = {
     // Vider la séquence
     app.sequence = [];
   },
+  //
+  handleColorClick: (event) => {
+
+    const clickedColor = event.target.id;
+    app.bumpCell(clickedColor);
+
+    const expectedColor = app.sequence[app.indice];
+
+    if(clickedColor === expectedColor) {
+        app.indice++;
+      if(app.indice === app.sequence.length) {
+        app.nextMove();
+      } else {
+        app.gameover();
+      }
+    };
+  }
 };
 
 document.addEventListener("DOMContentLoaded", app.init);
